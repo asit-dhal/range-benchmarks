@@ -4,8 +4,10 @@
 #include <range/v3/algorithm/fill.hpp>
 #include <range/v3/algorithm/fill_n.hpp>
 
+#ifdef BoostDefined
 #include <boost/range/algorithm/fill.hpp>
 #include <boost/range/algorithm/fill_n.hpp>
+#endif
 
 #include <vector>
 #include <algorithm>
@@ -34,7 +36,6 @@ static void BM_std_fill_n(benchmark::State& state)
     }
 }
 
-
 static void BM_range_fill(benchmark::State& state)
 {
     for (auto _ : state) {
@@ -57,6 +58,7 @@ static void BM_range_fill_n(benchmark::State& state)
     }
 }
 
+#ifdef BoostDefined
 static void BM_boost_fill(benchmark::State& state)
 {
     for (auto _ : state) {
@@ -78,13 +80,16 @@ static void BM_boost_fill_n(benchmark::State& state)
         boost::range::fill_n(v, 5, -1);
     }
 }
+#endif
 
 BENCHMARK(BM_std_fill);
 BENCHMARK(BM_std_fill_n);
 BENCHMARK(BM_range_fill);
 BENCHMARK(BM_range_fill_n);
+#ifdef BoostDefined
 BENCHMARK(BM_boost_fill);
 BENCHMARK(BM_boost_fill_n);
+#endif
 
 
 BENCHMARK_MAIN();
